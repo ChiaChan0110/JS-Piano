@@ -1,0 +1,221 @@
+html {
+  font-size: 10px;
+  font-family: sans-serif;
+}
+
+body {
+  min-width: 1024px;
+  height: 100vh;
+  margin: 0;
+  background-color: rgb(129,216,209);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+
+
+/* func */
+.func{
+  width: 900px;
+  display: flex;
+}
+.sample,
+.record{
+  flex: 1;
+}
+.sample h2,
+.record h2{
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.sample ul{
+  display: flex;
+  margin-bottom: 20px;
+}
+.sample ul li,
+.record button,
+.playList .playMusic-btn{
+  min-width: 100px;
+  font-size: 16px;
+  color: #198754;
+  text-align: center;
+  border: 1px solid #198754;
+  border-radius: 10px;
+  padding: 5px 10px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+.sample ul li:hover{
+  color: #fff;
+  background-color: #157347;
+}
+
+
+.record{
+
+}
+.record button{
+  color: #6c757d;
+  background-color: transparent;
+  border: 1px solid #6c757d;
+}
+.record button:hover{
+  color: #fff;
+  background-color: #6c757d;
+}
+.record button i{
+  margin-right: 5px;
+}
+.fa-circle.shine{
+  color: red;
+  animation: shine 3s infinite linear;
+}
+@keyframes shine {
+  0%,100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+
+
+/* piano */
+.piano{
+  width:  840px;
+  height: 400px;
+  background-color: black;
+  border-radius: 10px;
+  padding-right: 30px;
+  padding-left: 30px;
+  margin-bottom: 20px;
+}
+.title{
+  font-size: 4em;
+  color: white;
+  margin: 30px 0 0 0;
+  display: inline-block;
+}
+.btns{
+  display: inline-block;
+  margin: auto;
+}
+.btns button{
+  font-size: 1.5em;
+  color: white;
+  border: 1px solid white;
+  border-radius: 20px;
+  background-color: transparent;
+  padding: 5px 10px;
+  margin: 0 10px;
+  cursor: pointer;
+}
+.btns button:hover{
+  background-color: #333;
+}
+.keys{
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  margin-top: 30px;
+}
+.white{
+  width: 100%;
+  height: 280px;
+  flex:1;
+  border: 1px solid rgb(40, 40, 40);
+  background-color: white;
+  border-radius: 0 0 10px 10px;
+}
+.white span{
+  color: black;
+  font-size: 2em;
+  font-weight: 700;
+  margin-bottom: 1em;
+}
+.white.playing{
+  background-color: #ccc;
+}
+.black{
+  width: 24px;
+  height: 180px;
+  background-color: black;
+  border-radius: 0 0 5px 5px;
+  margin-left: -12px;
+  margin-right: -12px;
+  margin-bottom: 105px;
+  z-index: 10;
+  /* cursor: pointer; */
+  /* transition: .5s; */
+}
+.black span{
+  color: white;
+  font-size: 1.5em;
+  font-weight: 700;
+  margin-bottom: .5em;
+}
+.black.playing{
+  background-color: #333;
+}
+.white,.black{
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+
+
+/* playList */
+.playList{
+  width: 900px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.playList .times,
+.playList .musicName{
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.playList .musicList{
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+.playList .musicList .item{
+  min-width: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  align-items: center;
+  border: 1px solid #fff;
+  background-color: black;
+  padding: 5px;
+  margin: 2px;
+}
+.musicList .item .key{
+  font-size: 20px;
+  color: #fff;
+  margin-bottom: 5px;
+}
+.musicList .item .time{
+  font-size: 10px;
+  color: #fff;
+}
+.playList .playMusic-btn{
+  color: #dc3545;
+  background-color: transparent;
+  border: 1px solid #dc3545;
+}
+.playList .playMusic-btn:hover{
+  color: #fff;
+  background-color: #dc3545;
+}
+.playList .playMusic-btn i{
+  margin-right: 5px;
+}

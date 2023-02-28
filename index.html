@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <title>JS Piano</title>
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://kit.fontawesome.com/c910acea21.js" crossorigin="anonymous"></script>
+</head>
+<body>
+  
+<div class="func">
+  <div class="sample">
+    <h2>Sample</h2>
+    <ul>
+      <li>Music 1</li>
+      <li>Music 2</li>
+      <li>Record Play</li>
+    </ul>
+  </div>
+  <div class="record">
+    <h2>Record</h2>
+    <div class="btn">
+      <button class="record-btn"><i class="fa-solid fa-circle"></i>Record</button>
+    </div>
+  </div>
+</div>
+  
+  <div class="piano">
+    <h1 class="title">JS Piano</h1>
+    
+    <div class="keys">
+      <div data-key="81" class="white">
+        <span>Q</span>
+      </div>
+      <div data-key="50" class="black">
+        <span>2</span>
+      </div>
+      <div data-key="87" class="white">
+        <span>W</span>
+      </div>
+      <div data-key="51" class="black">
+        <span>3</span>
+      </div>
+      <div data-key="69" class="white">
+        <span>E</span>
+      </div>
+      <div data-key="82" class="white">
+        <span>R</span>
+      </div>
+      <div data-key="53" class="black">
+        <span>5</span>
+      </div>
+      <div data-key="84" class="white">
+        <span>T</span>
+      </div>
+      <div data-key="54" class="black">
+        <span>6</span>
+      </div>
+      <div data-key="89" class="white">
+        <span>Y</span>
+      </div>
+      <div data-key="55" class="black">
+        <span>7</span>
+      </div>
+      <div data-key="85" class="white">
+        <span>U</span>
+      </div>
+      <div data-key="90" class="white">
+        <span>Z</span>
+      </div>
+      <div data-key="83" class="black">
+        <span>S</span>
+      </div>
+      <div data-key="88" class="white">
+        <span>X</span>
+      </div>
+      <div data-key="68" class="black">
+        <span>D</span>
+      </div>
+      <div data-key="67" class="white">
+        <span>C</span>
+      </div>
+      <div data-key="86" class="white">
+        <span>V</span>
+      </div>
+      <div data-key="71" class="black">
+        <span>G</span>
+      </div>
+      <div data-key="66" class="white">
+        <span>B</span>
+      </div>
+      <div data-key="72" class="black">
+        <span>H</span>
+      </div>
+      <div data-key="78" class="white">
+        <span>N</span>
+      </div>
+      <div data-key="74" class="black">
+        <span>J</span>
+      </div>
+      <div data-key="77" class="white">
+        <span>M</span>
+      </div>
+      <div data-key="188" class="white">
+        <span>，</span>
+      </div>
+    </div>
+  </div>
+  
+  <div class="playList">
+    <div class="times">0</div>
+    <div class="musicName">範例1:小星星</div>
+    <div class="musicList"></div>
+    <button class="playMusic-btn"><i class="fa-solid fa-play"></i>Play</button>
+    <!-- <i class="fa-solid fa-stop"></i> -->
+  </div>
+  
+  <div>
+    <audio data-key="81" src="sounds/1.wav"></audio>
+    <audio data-key="50" src="sounds/1.5.wav"></audio>
+    <audio data-key="87" src="sounds/2.wav"></audio>
+    <audio data-key="51" src="sounds/2.5.wav"></audio>
+    <audio data-key="69" src="sounds/3.wav"></audio>
+    <audio data-key="82" src="sounds/4.wav"></audio>
+    <audio data-key="53" src="sounds/4.5.wav"></audio>
+    <audio data-key="84" src="sounds/5.wav"></audio>
+    <audio data-key="54" src="sounds/5.5.wav"></audio>
+    <audio data-key="89" src="sounds/6.wav"></audio>
+    <audio data-key="55" src="sounds/6.5.wav"></audio>
+    <audio data-key="85" src="sounds/7.wav"></audio>
+    <audio data-key="90" src="sounds/8.wav"></audio>
+    <audio data-key="83" src="sounds/8.5.wav"></audio>
+    <audio data-key="88" src="sounds/9.wav"></audio>
+    <audio data-key="68" src="sounds/9.5.wav"></audio>
+    <audio data-key="67" src="sounds/10.wav"></audio>
+    <audio data-key="86" src="sounds/11.wav"></audio>
+    <audio data-key="71" src="sounds/11.5.wav"></audio>
+    <audio data-key="66" src="sounds/12.wav"></audio>
+    <audio data-key="72" src="sounds/12.5.wav"></audio>
+    <audio data-key="78" src="sounds/13.wav"></audio>
+    <audio data-key="74" src="sounds/13.5.wav"></audio>
+    <audio data-key="77" src="sounds/14.wav"></audio>
+    <audio data-key="188" src="sounds/15.wav"></audio>
+  </div>
+
+<script>
+  (function(){
+
+    const recordButton = document.querySelector(".record-btn");
+    const playButton = document.querySelector(".playMusic-btn");
+    const sample = document.querySelectorAll(".sample ul li");
+
+    let recorder;
+    let recordTime = 0;
+    let playList = [];
+    const sampleMusic = [
+      {
+        name: "範例1",
+        music: [
+          {key:"E", code:69, time:105},{key:"E", code:69, time:223},
+          {key:"R", code:82, time:331},{key:"T", code:84, time:482},
+          {key:"T", code:84, time:565},{key:"R", code:82, time:673},
+          {key:"E", code:69, time:782},{key:"W", code:87, time:893},
+          {key:"Q", code:81, time:1006},{key:"Q", code:81, time:1113},
+          {key:"W", code:87, time:1220},{key:"E", code:69, time:1337},
+          {key:"E", code:69, time:1456},{key:"W", code:87, time:1623},
+          {key:"W", code:87, time:1680},{key:"E", code:69, time:1883},
+          {key:"E", code:69, time:1988},{key:"R", code:82, time:2107},
+          {key:"T", code:84, time:2218},{key:"T", code:84, time:2337},
+          {key:"R", code:82, time:2446},{key:"E", code:69, time:2555},
+          {key:"W", code:87, time:2664},{key:"Q", code:81, time:2771},
+          {key:"Q", code:81, time:2880},{key:"W", code:87, time:2992},
+          {key:"E", code:69, time:3103},{key:"W", code:87, time:3220},
+          {key:"Q", code:81, time:3395},{key:"Q", code:81, time:3449}
+        ]
+      },
+      {
+        name: "範例2",
+        music: [
+          {key:"E", code:69, time:105},{key:"E", code:69, time:223},
+          {key:"R", code:82, time:331},{key:"T", code:84, time:482},
+          {key:"T", code:84, time:565},{key:"R", code:82, time:673},
+          {key:"E", code:69, time:782},{key:"W", code:87, time:893},
+          {key:"Q", code:81, time:1006},{key:"Q", code:81, time:1113},
+          {key:"W", code:87, time:1220},{key:"E", code:69, time:1337},
+          {key:"E", code:69, time:1456},{key:"W", code:87, time:1623},
+          {key:"W", code:87, time:1680},{key:"E", code:69, time:1883},
+          {key:"E", code:69, time:1988},{key:"R", code:82, time:2107},
+          {key:"T", code:84, time:2218},{key:"T", code:84, time:2337},
+          {key:"R", code:82, time:2446},{key:"E", code:69, time:2555},
+          {key:"W", code:87, time:2664},{key:"Q", code:81, time:2771},
+          {key:"Q", code:81, time:2880},{key:"W", code:87, time:2992},
+          {key:"E", code:69, time:3103},{key:"W", code:87, time:3220},
+          {key:"Q", code:81, time:3395},{key:"Q", code:81, time:3449}
+        ]
+      },
+      {
+        name: "錄製曲目",
+        music: []
+      },
+    ];
+    
+    // const playMusic = false;
+    // const playmusicTime = 0;
+    
+    
+
+    function playHandler(e){
+      const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+      const dom = document.querySelector(`div[data-key="${e.keyCode}"]`);
+      
+
+      if(audio && dom && !dom.classList.contains("playing")){
+        audio.currentTime=0;
+        audio.play();
+
+        dom.classList.add("playing");
+
+        if(recordTime > 0){ 
+          sampleMusic[2].music.push({
+            key: e.key.toUpperCase(),
+            code: e.keyCode,
+            time: recordTime
+          });
+          
+          playReady(2);
+        }
+      }
+      
+    }
+
+    function stopHandler(e){
+      const dom = document.querySelector(`div[data-key="${e.keyCode}"]`);
+      if(dom) dom.classList.remove("playing");
+      keydowning = false;
+    }
+    
+    function recordHandler(){
+      let timeShow = document.querySelector(".playList .times");
+      if(recordTime===0){
+        sampleMusic[2].music = [];
+        playReady(2);
+        recorder = setInterval(()=>{
+          recordTime++; 
+          timeShow.innerHTML = recordTime;
+        });
+        recordButton.innerHTML = `<i class="fa-solid fa-circle shine"></i>Record Stop`;
+      }else{
+        clearInterval(recorder);
+        recordTime = 0;
+        timeShow.innerHTML = recordTime;
+        recordButton.innerHTML = `<i class="fa-solid fa-circle"></i>Record`;
+      }
+    }
+
+    function playMusicHandler(){
+      
+    }
+    
+    function playReady(index){
+      console.log(index);
+      const musicList = document.querySelector(".playList .musicList");
+      let html = "";
+      html = sampleMusic[index].music.map(sound  => {
+        return `
+          <div class="item">
+            <p class="key">${sound.key}</p>
+            <p class="time">${sound.time}</p>
+          </div>
+        `;
+      }).join('');
+
+      musicList.innerHTML = html;
+    }
+
+
+
+    window.addEventListener('keydown',playHandler);
+    window.addEventListener('keyup',stopHandler);
+    recordButton.addEventListener('click', recordHandler)
+    playButton.addEventListener('click', playMusicHandler)
+    sample.forEach((list,index) =>{
+      list.addEventListener('click', ()=>{
+        playReady(index);
+      })
+    });
+
+    // function transitionendHandler(e){
+    //   if(e.propertyName === 'transform'){
+    //     e.currentTarget.classList.remove("playing");
+    //   }
+    // }
+
+    // const keys = document.querySelectorAll('.key');
+    // keys.forEach(key => 
+    //   key.addEventListener('transitionend',transitionendHandler)
+    // );
+    
+  })()
+
+</script>
+
+
+</body>
+</html>
