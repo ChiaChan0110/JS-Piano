@@ -12,11 +12,11 @@
 <div class="func">
   <div class="sample">
     <h2>Sample</h2>
-    <ul>
-      <li>Music 1</li>
-      <li>Music 2</li>
-      <li>Record Play</li>
-    </ul>
+    <div class="btn">
+      <button>Music 1</button>
+      <button>Music 2</button>
+      <button>Record Play</button>
+    </div>
   </div>
   <div class="record">
     <h2>Record</h2>
@@ -30,91 +30,59 @@
     <h1 class="title">JS Piano</h1>
     
     <div class="keys">
-      <div data-key="81" class="white">
-        <span>Q</span>
-      </div>
-      <div data-key="50" class="black">
-        <span>2</span>
-      </div>
-      <div data-key="87" class="white">
-        <span>W</span>
-      </div>
-      <div data-key="51" class="black">
-        <span>3</span>
-      </div>
-      <div data-key="69" class="white">
-        <span>E</span>
-      </div>
-      <div data-key="82" class="white">
-        <span>R</span>
-      </div>
-      <div data-key="53" class="black">
-        <span>5</span>
-      </div>
-      <div data-key="84" class="white">
-        <span>T</span>
-      </div>
-      <div data-key="54" class="black">
-        <span>6</span>
-      </div>
-      <div data-key="89" class="white">
-        <span>Y</span>
-      </div>
-      <div data-key="55" class="black">
-        <span>7</span>
-      </div>
-      <div data-key="85" class="white">
-        <span>U</span>
-      </div>
-      <div data-key="90" class="white">
-        <span>Z</span>
-      </div>
-      <div data-key="83" class="black">
-        <span>S</span>
-      </div>
-      <div data-key="88" class="white">
-        <span>X</span>
-      </div>
-      <div data-key="68" class="black">
-        <span>D</span>
-      </div>
-      <div data-key="67" class="white">
-        <span>C</span>
-      </div>
-      <div data-key="86" class="white">
-        <span>V</span>
-      </div>
-      <div data-key="71" class="black">
-        <span>G</span>
-      </div>
-      <div data-key="66" class="white">
-        <span>B</span>
-      </div>
-      <div data-key="72" class="black">
-        <span>H</span>
-      </div>
-      <div data-key="78" class="white">
-        <span>N</span>
-      </div>
-      <div data-key="74" class="black">
-        <span>J</span>
-      </div>
-      <div data-key="77" class="white">
-        <span>M</span>
-      </div>
-      <div data-key="188" class="white">
-        <span>，</span>
-      </div>
+      <div data-key="81" class="white"><span>Q</span></div>
+
+      <div data-key="50" class="black"><span>2</span></div>
+
+      <div data-key="87" class="white"><span>W</span></div>
+
+      <div data-key="51" class="black"><span>3</span></div>
+
+      <div data-key="69" class="white"><span>E</span></div>
+
+      <div data-key="82" class="white"><span>R</span></div>
+
+      <div data-key="53" class="black"><span>5</span></div>
+
+      <div data-key="84" class="white"><span>T</span></div>
+
+      <div data-key="54" class="black"><span>6</span></div>
+
+      <div data-key="89" class="white"><span>Y</span></div>
+
+      <div data-key="55" class="black"><span>7</span></div>
+
+      <div data-key="85" class="white"><span>U</span></div>
+
+      <div data-key="90" class="white"><span>Z</span></div>
+
+      <div data-key="83" class="black"><span>S</span></div>
+
+      <div data-key="88" class="white"><span>X</span></div>
+
+      <div data-key="68" class="black"><span>D</span></div>
+
+      <div data-key="67" class="white"><span>C</span></div>
+
+      <div data-key="86" class="white"><span>V</span></div>
+
+      <div data-key="71" class="black"><span>G</span></div>
+
+      <div data-key="66" class="white"><span>B</span></div>
+
+      <div data-key="72" class="black"><span>H</span></div>
+
+      <div data-key="78" class="white"><span>N</span></div>
+
+      <div data-key="74" class="black"><span>J</span></div>
+
+      <div data-key="77" class="white"><span>M</span></div>
+
+      <div data-key="188" class="white"><span>，</span></div>
     </div>
   </div>
   
-  <div class="playList">
-    <div class="times">0</div>
-    <div class="musicName">範例1:小星星</div>
-    <div class="musicList"></div>
-    <button class="playMusic-btn"><i class="fa-solid fa-play"></i>Play</button>
-    <!-- <i class="fa-solid fa-stop"></i> -->
-  </div>
+  <div class="playBar"></div>
   
   <div>
     <audio data-key="81" src="sounds/1.wav"></audio>
@@ -148,15 +116,17 @@
   (function(){
 
     const recordButton = document.querySelector(".record-btn");
-    const playButton = document.querySelector(".playMusic-btn");
-    const sample = document.querySelectorAll(".sample ul li");
+    const sample = document.querySelectorAll(".sample .btn button");
 
     let recorder;
     let recordTime = 0;
     let playList = [];
+    let player;
+    let playMusicTime = 0;
+
     const sampleMusic = [
       {
-        name: "範例1",
+        name: "Music 1：快樂頌",
         music: [
           {key:"E", code:69, time:105},{key:"E", code:69, time:223},
           {key:"R", code:82, time:331},{key:"T", code:84, time:482},
@@ -176,23 +146,33 @@
         ]
       },
       {
-        name: "範例2",
+        name: "Music 2：小蜜蜂",
         music: [
-          {key:"E", code:69, time:105},{key:"E", code:69, time:223},
-          {key:"R", code:82, time:331},{key:"T", code:84, time:482},
-          {key:"T", code:84, time:565},{key:"R", code:82, time:673},
-          {key:"E", code:69, time:782},{key:"W", code:87, time:893},
-          {key:"Q", code:81, time:1006},{key:"Q", code:81, time:1113},
-          {key:"W", code:87, time:1220},{key:"E", code:69, time:1337},
-          {key:"E", code:69, time:1456},{key:"W", code:87, time:1623},
-          {key:"W", code:87, time:1680},{key:"E", code:69, time:1883},
-          {key:"E", code:69, time:1988},{key:"R", code:82, time:2107},
-          {key:"T", code:84, time:2218},{key:"T", code:84, time:2337},
-          {key:"R", code:82, time:2446},{key:"E", code:69, time:2555},
-          {key:"W", code:87, time:2664},{key:"Q", code:81, time:2771},
-          {key:"Q", code:81, time:2880},{key:"W", code:87, time:2992},
-          {key:"E", code:69, time:3103},{key:"W", code:87, time:3220},
-          {key:"Q", code:81, time:3395},{key:"Q", code:81, time:3449}
+          {key:"T", code:84, time:80},{key:"E", code:69, time:190},
+          {key:"E", code:69, time:300},{key:"R", code:82, time:500},
+          {key:"W", code:87, time:610},{key:"W", code:87, time:720},
+          {key:"Q", code:81, time:920},{key:"W", code:87, time:1030},
+          {key:"E", code:69, time:1140},{key:"R", code:82, time:1250},
+          {key:"T", code:84, time:1360},{key:"T", code:84, time:1470},
+          {key:"T", code:84, time:1580},{key:"T", code:84, time:1780},
+          {key:"E", code:69, time:1890},{key:"E", code:69, time:2000},
+          {key:"R", code:82, time:2200},{key:"W", code:87, time:2320},
+          {key:"W", code:87, time:2430},{key:"Q", code:81, time:2630},
+          {key:"E", code:69, time:2740},{key:"T", code:84, time:2850},
+          {key:"T", code:84, time:2960},{key:"E", code:69, time:3070},
+          {key:"W", code:87, time:3270},{key:"W", code:87, time:3380},
+          {key:"W", code:87, time:3490},{key:"W", code:87, time:3600},
+          {key:"W", code:87, time:3710},{key:"E", code:69, time:3820},
+          {key:"R", code:82, time:3930},{key:"E", code:69, time:4130},
+          {key:"E", code:69, time:4240},{key:"E", code:69, time:4350},
+          {key:"E", code:69, time:4460},{key:"E", code:69, time:4570},
+          {key:"R", code:82, time:4680},{key:"T", code:84, time:4790},
+          {key:"T", code:84, time:4990},{key:"E", code:69, time:5100},
+          {key:"E", code:69, time:5210},{key:"R", code:82, time:5410},
+          {key:"W", code:87, time:5520},{key:"W", code:87, time:5630},
+          {key:"Q", code:81, time:5830},{key:"E", code:69, time:5940},
+          {key:"T", code:84, time:6050},{key:"T", code:84, time:6160},
+          {key:"Q", code:81, time:6270}
         ]
       },
       {
@@ -201,15 +181,9 @@
       },
     ];
     
-    // const playMusic = false;
-    // const playmusicTime = 0;
-    
-    
-
-    function playHandler(e){
+    function playKey(e){
       const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
       const dom = document.querySelector(`div[data-key="${e.keyCode}"]`);
-      
 
       if(audio && dom && !dom.classList.contains("playing")){
         audio.currentTime=0;
@@ -217,52 +191,49 @@
 
         dom.classList.add("playing");
 
-        if(recordTime > 0){ 
-          sampleMusic[2].music.push({
-            key: e.key.toUpperCase(),
-            code: e.keyCode,
-            time: recordTime
-          });
-          
-          playReady(2);
-        }
+        addRecord(e);
       }
-      
     }
 
-    function stopHandler(e){
+    function stopKey(e){
       const dom = document.querySelector(`div[data-key="${e.keyCode}"]`);
       if(dom) dom.classList.remove("playing");
-      keydowning = false;
     }
     
-    function recordHandler(){
-      let timeShow = document.querySelector(".playList .times");
-      if(recordTime===0){
+    function recordMusic(){
+      if(recordTime === 0){
         sampleMusic[2].music = [];
         playReady(2);
         recorder = setInterval(()=>{
           recordTime++; 
-          timeShow.innerHTML = recordTime;
         });
         recordButton.innerHTML = `<i class="fa-solid fa-circle shine"></i>Record Stop`;
+
       }else{
         clearInterval(recorder);
         recordTime = 0;
-        timeShow.innerHTML = recordTime;
         recordButton.innerHTML = `<i class="fa-solid fa-circle"></i>Record`;
       }
     }
 
-    function playMusicHandler(){
-      
+    function addRecord(e){
+      if(recordTime > 0){ 
+        sampleMusic[2].music.push({ 
+          key: e.key.toUpperCase(), 
+          code: e.keyCode, 
+          time: recordTime 
+        });
+
+        playReady(2);
+      }
     }
-    
+
     function playReady(index){
-      console.log(index);
-      const musicList = document.querySelector(".playList .musicList");
-      let html = "";
-      html = sampleMusic[index].music.map(sound  => {
+      const playBar = document.querySelector(".playBar");
+
+      playList = sampleMusic[index];
+      
+      let html = playList.music.map(sound  => {
         return `
           <div class="item">
             <p class="key">${sound.key}</p>
@@ -271,31 +242,104 @@
         `;
       }).join('');
 
-      musicList.innerHTML = html;
+      playBar.innerHTML = `
+        <div class="musicName">${playList.name}</div>
+        <div class="musicList">${html}</div>
+      `;
+      
+      if(html && recordTime === 0)
+        playBar.innerHTML += `<button class="playMusic-btn"><i class="fa-solid fa-play"></i>Play</button>`;
+    }
+
+    function playMusic(){
+      let listIndex = 0;
+      let key = playList.music;
+      const playButton = document.querySelector(".playMusic-btn");
+
+      sample.forEach(btn=>{
+        btn.disabled = true;
+      });
+      recordButton.disabled = true;
+
+      if(playMusicTime === 0){
+        playButton.innerHTML = `<i class="fa-solid fa-stop"></i>Stop`;
+
+        player = setInterval(()=>{
+          playMusicTime++;
+          if(playMusicTime >= key[listIndex].time){
+            autoPlay(listIndex ,key[listIndex].code);
+            listIndex++;
+            if(listIndex >= key.length)
+              stopAutoPlay();
+          }
+        });
+      }else{
+        stopAutoPlay();
+      }
+    }
+
+    function autoPlay(index, code){
+      //清除鍵盤前一個撥放key
+      const doms =  document.querySelectorAll("div[data-key]");
+      doms.forEach(item=>{
+        item.classList.remove("playing");
+      });
+
+      const sheetKey = document.querySelectorAll(".musicList .item");
+      sheetKey.forEach(item=>{
+        item.classList.remove("active");
+      });
+
+      //播放下一個聲音
+      const audio = document.querySelector(`audio[data-key="${code}"]`);
+      const dom = document.querySelector(`div[data-key="${code}"]`);
+
+      if(audio && dom && !dom.classList.contains("playing")){
+        audio.currentTime=0;
+        audio.play();
+
+        dom.classList.add("playing");
+
+        sheetKey[index].classList.add("active");
+      }
+      
+    }
+    
+    function stopAutoPlay(){
+      clearInterval(player);
+      playMusicTime = 0;
+      const playButton = document.querySelector(".playMusic-btn");
+      playButton.innerHTML = `<i class="fa-solid fa-play"></i>Play`;
+
+      sample.forEach(btn=>{
+        btn.disabled = false;
+      });
+      recordButton.disabled = false;
+
+      const doms =  document.querySelectorAll("div[data-key]");
+      doms.forEach(item=>{
+        item.classList.remove("playing");
+      });
+
+      const sheetKey = document.querySelectorAll(".musicList .item");
+      sheetKey.forEach(item=>{
+        item.classList.remove("active");
+      });
     }
 
 
+    window.addEventListener('keydown',playKey);
+    window.addEventListener('keyup',stopKey);
 
-    window.addEventListener('keydown',playHandler);
-    window.addEventListener('keyup',stopHandler);
-    recordButton.addEventListener('click', recordHandler)
-    playButton.addEventListener('click', playMusicHandler)
-    sample.forEach((list,index) =>{
-      list.addEventListener('click', ()=>{
+    sample.forEach((btn,index) =>{
+      btn.addEventListener('click', function(){ 
         playReady(index);
-      })
+
+        const playButton = document.querySelector(".playMusic-btn");
+        playButton.addEventListener('click', playMusic);
+      });
     });
-
-    // function transitionendHandler(e){
-    //   if(e.propertyName === 'transform'){
-    //     e.currentTarget.classList.remove("playing");
-    //   }
-    // }
-
-    // const keys = document.querySelectorAll('.key');
-    // keys.forEach(key => 
-    //   key.addEventListener('transitionend',transitionendHandler)
-    // );
+    recordButton.addEventListener('click', recordMusic);
     
   })()
 

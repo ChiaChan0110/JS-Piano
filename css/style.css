@@ -7,7 +7,7 @@ body {
   min-width: 1024px;
   height: 100vh;
   margin: 0;
-  background-color: rgb(129,216,209);
+  background-color: rgb(255, 245, 203);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -21,57 +21,49 @@ body {
   width: 900px;
   display: flex;
 }
-.sample,
-.record{
+.func>div{
   flex: 1;
 }
-.sample h2,
-.record h2{
+.func>div h2{
   font-size: 20px;
   font-weight: 700;
   margin-bottom: 10px;
 }
-.sample ul{
+.func>div .btn{
   display: flex;
   margin-bottom: 20px;
 }
-.sample ul li,
-.record button,
-.playList .playMusic-btn{
+.btn button,
+.playBar .playMusic-btn{
   min-width: 100px;
   font-size: 16px;
-  color: #198754;
+  color: #212529;
   text-align: center;
-  border: 1px solid #198754;
+  background-color: transparent;
+  border: 1px solid #212529;
   border-radius: 10px;
   padding: 5px 10px;
   margin-right: 10px;
   cursor: pointer;
 }
-.sample ul li:hover{
+.btn button:hover{
   color: #fff;
-  background-color: #157347;
+  background-color: #212529;
 }
-
-
-.record{
-
-}
-.record button{
+.btn .record-btn{
   color: #6c757d;
-  background-color: transparent;
   border: 1px solid #6c757d;
 }
-.record button:hover{
+.btn .record-btn:hover{
   color: #fff;
   background-color: #6c757d;
 }
-.record button i{
+.btn .record-btn i{
   margin-right: 5px;
 }
 .fa-circle.shine{
   color: red;
-  animation: shine 3s infinite linear;
+  animation: shine 1s infinite linear;
 }
 @keyframes shine {
   0%,100% {
@@ -149,8 +141,6 @@ body {
   margin-right: -12px;
   margin-bottom: 105px;
   z-index: 10;
-  /* cursor: pointer; */
-  /* transition: .5s; */
 }
 .black span{
   color: white;
@@ -169,53 +159,54 @@ body {
 
 
 
-/* playList */
-.playList{
+/* playBar */
+.playBar{
   width: 900px;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-.playList .times,
-.playList .musicName{
+.playBar .times,
+.playBar .musicName{
   font-size: 20px;
   font-weight: 700;
   margin-bottom: 10px;
 }
-.playList .musicList{
+.playBar .musicList{
   display: flex;
   flex-wrap: wrap;
   margin-bottom: 20px;
 }
-.playList .musicList .item{
+.playBar .musicList .item{
   min-width: 20px;
   display: flex;
   flex-direction: column;
   justify-content: end;
   align-items: center;
-  border: 1px solid #fff;
-  background-color: black;
+  border: 1px solid #000;
+  background-color: #8acd79;
   padding: 5px;
   margin: 2px;
 }
+.playBar .musicList .item.active{
+  background-color: #6a9c5d;
+}
 .musicList .item .key{
   font-size: 20px;
-  color: #fff;
   margin-bottom: 5px;
 }
 .musicList .item .time{
   font-size: 10px;
-  color: #fff;
 }
-.playList .playMusic-btn{
-  color: #dc3545;
+.playBar .playMusic-btn{
+  color: #0d6efd;
   background-color: transparent;
-  border: 1px solid #dc3545;
+  border: 1px solid #0d6efd;
 }
-.playList .playMusic-btn:hover{
+.playBar .playMusic-btn:hover{
   color: #fff;
-  background-color: #dc3545;
+  background-color: #0d6efd;
 }
-.playList .playMusic-btn i{
+.playBar .playMusic-btn i{
   margin-right: 5px;
 }
